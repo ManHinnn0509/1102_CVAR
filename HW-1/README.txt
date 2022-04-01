@@ -1,3 +1,15 @@
+HW1 Photometric Stereo
+
+Deadline : 04/03(SUN) 23:59:59
+
+請將報告(包含code, 註解,心得 兩組測資分別的結果圖包含albedo, Nx, Ny, Nz, Normal的彩色圖)，
+
+以及將還原出來的深度值矩陣存成純文字檔(.txt)
+
+壓縮後上傳至ilearn
+
+-----
+
 Ref.
 
 Shape from Normals - Photometric Stereo - YouTube

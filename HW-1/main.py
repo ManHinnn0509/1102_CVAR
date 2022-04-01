@@ -40,6 +40,10 @@ def calc(dir):
     p = np.zeros(zeros)
     q = np.zeros(zeros)
 
+    nx = np.zeros(zeros)
+    ny = np.zeros(zeros)
+    nz = np.zeros(zeros)
+
     for y in range(height):
         for x in range(width):
             i = np.array([i[y][x] for i in imgs])
@@ -64,6 +68,10 @@ def calc(dir):
                 p[y][x] = -1 * (n[0] / n[2])
                 q[y][x] = -1 * (n[1] / n[2])
 
+                nx[y][x] = n[0]
+                ny[y][x] = n[1]
+                nz[y][x] = n[2]
+
                 # Albedo = |b|
                 albedo[y][x] = np.linalg.norm(G, axis=1)
 
@@ -83,11 +91,21 @@ def calc(dir):
     # 0 ~ 255 Only
     normal = (0.5 + (normal / 2)) * 255
     normal = normal.astype(np.uint8)
+    # print(normal.shape)
 
     albedo = albedo / np.max(albedo) *  255
     albedo = albedo.astype(np.uint8)
 
+    nx = (0.5 + (nx / 2)) * 255
+    nx = nx.astype(np.uint8)
     
+    ny = (0.5 + (ny / 2)) * 255
+    ny = ny.astype(np.uint8)
+    
+    nz = (0.5 + (nz / 2)) * 255
+    nz = nz.astype(np.uint8)
+    
+
     # Show img, see result
     """
     cv2.imshow('Albedo', albedo)
@@ -98,9 +116,21 @@ def calc(dir):
     cv2.destroyAllWindows()
     """
 
+    """
+    # cv2.imshow('nx', nx)
+    cv2.imshow('ny', ny)
+    # cv2.imshow('nz', nz)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+    """
+    
     # Save data
     cv2.imwrite(f"./{dir}/albedo.png", albedo)
     cv2.imwrite(f"./{dir}/normal.png", normal)
+
+    cv2.imwrite(f"./{dir}/nx.png", nx)
+    cv2.imwrite(f"./{dir}/ny.png", ny)
+    cv2.imwrite(f"./{dir}/nz.png", nz)
 
     with open(f"./{dir}/depth.txt", "w+") as f:
         for line in h:
