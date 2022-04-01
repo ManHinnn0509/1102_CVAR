@@ -31,18 +31,18 @@ def calc(dir):
     # y, x
     height, width, ignored = imgs[0].shape
 
-    zeros = imgs[0].shape
+    shape = imgs[0].shape
 
-    albedo = np.zeros(zeros)
-    normal = np.zeros(zeros)
+    albedo = np.zeros(shape)
+    normal = np.zeros(shape)
 
-    h = np.zeros(zeros)
-    p = np.zeros(zeros)
-    q = np.zeros(zeros)
+    h = np.zeros(shape)
+    p = np.zeros(shape)
+    q = np.zeros(shape)
 
-    nx = np.zeros(zeros)
-    ny = np.zeros(zeros)
-    nz = np.zeros(zeros)
+    nx = np.zeros(shape)
+    ny = np.zeros(shape)
+    nz = np.zeros(shape)
 
     for y in range(height):
         for x in range(width):
