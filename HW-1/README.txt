@@ -8,3 +8,5 @@ https://pages.cs.wisc.edu/~csverma/CS766_09/Stereo/stereo.html#Depth_Map_Generat
 
 xuwenzhe/EECS442-Photometric-Stereo
 https://github.com/xuwenzhe/EECS442-Photometric-Stereo
+
+http://www.sci.utah.edu/~gerig/CS6320-S2013/Materials/Forsyth-Ponce-SfS.pdf

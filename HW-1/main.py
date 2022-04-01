@@ -4,9 +4,12 @@ import numpy as np
 import cv2
 
 def main():
+    calc("bunny")
+    calc("teapot")
 
-    dir = "bunny"
-    # dir = "teapot"
+    print("--- End of Program ---")
+
+def calc(dir):
 
     fileNames = [f"./{dir}/{i}" for i in os.listdir(dir) if (i.endswith(".bmp"))]
     imgs = [cv2.imread(i) for i in fileNames]
@@ -28,12 +31,14 @@ def main():
     # y, x
     height, width, ignored = imgs[0].shape
 
-    albedo = np.zeros(imgs[0].shape)
-    normal = np.zeros(imgs[0].shape)
+    zeros = imgs[0].shape
 
-    h = np.zeros(imgs[0].shape)
-    p = np.zeros(imgs[0].shape)
-    q = np.zeros(imgs[0].shape)
+    albedo = np.zeros(zeros)
+    normal = np.zeros(zeros)
+
+    h = np.zeros(zeros)
+    p = np.zeros(zeros)
+    q = np.zeros(zeros)
 
     for y in range(height):
         for x in range(width):
@@ -46,16 +51,16 @@ def main():
 
             G = N.T
             # print(G)
-
-            # Normal n = b / |b|
+            
             G_grey = G[0] * 0.0722 + G[1] * 0.7152 + G[2] * 0.2126
             G_norm = np.linalg.norm(G_grey)
 
-            # If normal == 0 then aldedo == 0 too
+            # If norm != 0 then aldedo != 0 too
             if (G_norm != 0):
-                normal[y][x] = G_grey / G_norm
+                # Normal n = b / |b|
+                n = G_grey / G_norm
+                normal[y][x] = n
 
-                n = normal[y][x]
                 p[y][x] = -1 * (n[0] / n[2])
                 q[y][x] = -1 * (n[1] / n[2])
 
@@ -72,8 +77,8 @@ def main():
         for x in range(1, width):
             h[y][x] = h[y][x - 1] + p[y][x]
 
-    print(h)
-    print(h.shape)
+    # print(h)
+    # print(h.shape)
 
     # 0 ~ 255 Only
     normal = (0.5 + (normal / 2)) * 255
@@ -100,10 +105,6 @@ def main():
     with open(f"./{dir}/depth.txt", "w+") as f:
         for line in h:
             np.savetxt(f, line, fmt="%d")
-    
-    print("--- End of Program ---")
-    
-    
 
 def splitLightSource(s):
     data = [i.split(":")[-1].split(",") for i in s.split("\n") if (i != "")]
@@ -121,11 +122,3 @@ def readFile(p, encoding="utf-8"):
 
 if (__name__ == "__main__"):
     main()
-
-"""
-Notes / Comments
-
-http://www.sci.utah.edu/~gerig/CS6320-S2013/Materials/Forsyth-Ponce-SfS.pdf
-Search: "Shape from Normals"
-
-"""
